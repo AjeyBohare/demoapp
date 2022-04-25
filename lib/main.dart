@@ -1,7 +1,12 @@
-//import 'package:flutter/material.dart';
-//import './MyApp.dart';
+import 'package:demoapp/MyApp.dart';
+import 'package:flutter/material.dart';
 
 void main() {
+  //dart_basic();
+  runApp(MyApp());
+}
+
+void dart_basic() {
   var runRate = 106.5;
   var count = 10;
   var message = "Message of the day";
@@ -118,8 +123,7 @@ void loopSample() {
 }
 
 void conditionSample() {
-  int a = 2;
-  int b = 3;
+  int a = 2, b = 3;
   if (a > b) {
     print("$a > $b is true");
   } else if (a == b) {
@@ -180,6 +184,4 @@ String fullName(String firstname, String? middleName, {String lastName = ""}) {
       : "$firstname $middleName $lastName";
 }
 
-var increment = ({value}) {
-  return value == null ? 0 : value + 1;
-};
+var increment = ({value}) => value == null ? 0 : value + 1;
