@@ -53,28 +53,74 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Text(
-          'Got a scaffold!!',
-          style: Theme.of(context).textTheme.headline4,
-          textScaleFactor: scaleMultiplier,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  minWidth: double.infinity, minHeight: 10, maxHeight: 300),
+              child: Card(
+                shadowColor: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Text(
+                      'Got a scaffold!!',
+                      style: Theme.of(context).textTheme.headline4,
+                      textScaleFactor: scaleMultiplier,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  for (int i = 0; i < 15; i++)
+                    ListTile(
+                      focusColor: Colors.blue,
+                      title: Text(
+                        i.toString(),
+                      ),
+                    )
+                ],
+              ),
+            )
+          ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () =>
-                setState(() => scaleMultiplier = scaleMultiplier * 1.25),
-            child: const Icon(Icons.add),
-          ),
-          SizedBox(height: 5),
-          FloatingActionButton(
-            onPressed: () =>
-                setState(() => scaleMultiplier = scaleMultiplier * 0.75),
-            child: const Icon(Icons.remove),
-          ),
-        ],
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+          color: Colors.red,
+        )),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () =>
+                  setState(() => scaleMultiplier = scaleMultiplier * 1.25),
+              child: const Icon(Icons.add),
+            ),
+            SizedBox(
+              height: 5,
+              width: 5,
+            ),
+            FloatingActionButton(
+              onPressed: () =>
+                  setState(() => scaleMultiplier = scaleMultiplier * 0.75),
+              child: const Icon(Icons.remove),
+            ),
+          ],
+        ),
       ),
     );
   }

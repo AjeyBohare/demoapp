@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 
 void main() {
   //dart_basic();
-  runApp(MyApp());
+  runApp(Center(
+    child: Text(
+      "First App",
+      textDirection: TextDirection.ltr,
+    ),
+  ));
 }
 
 void dart_basic() {
