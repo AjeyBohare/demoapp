@@ -3,12 +3,26 @@ import 'package:flutter/material.dart';
 
 void main() {
   //dart_basic();
-  runApp(Center(
-    child: Text(
-      "First App",
-      textDirection: TextDirection.ltr,
-    ),
-  ));
+  runApp(MaterialApp(home: CentreText()));
+}
+
+class CentreText extends StatelessWidget {
+  const CentreText({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      // child: DefaultTextStyle(
+      //   style: TextStyle(),
+      child: Text(
+        "First App",
+        textDirection: TextDirection.ltr,
+      ),
+      //  ),
+    );
+  }
 }
 
 void dart_basic() {
