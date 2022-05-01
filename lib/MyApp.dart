@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,24 +21,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class WithoutScaffoldContainer extends StatelessWidget {
-  const WithoutScaffoldContainer({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.blueAccent,
-        child: const Center(
-          child: Text(
-            "First Widget after Material App",
-            style: TextStyle(decoration: TextDecoration.none),
-          ),
-        ));
-  }
-}
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({required this.title});
   final String title;
@@ -46,6 +31,30 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   double scaleMultiplier = 1;
+  List<String> number = [
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen"
+  ];
+  String? numberInString;
+
+  @override
+  void initState() {
+    numberInString = number[0];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,17 +68,15 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ConstrainedBox(
-              constraints: BoxConstraints(
-                  minWidth: double.infinity, minHeight: 10, maxHeight: 300),
-              child: Card(
-                shadowColor: Colors.blueAccent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
+              constraints: const BoxConstraints(minHeight: 20, maxHeight: 500),
+              child: SingleChildScrollView(
+                child: Card(
+                  shadowColor: Colors.blueAccent,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
                   child: Center(
                     child: Text(
-                      'Got a scaffold!!',
+                      numberInString ?? "One",
                       style: Theme.of(context).textTheme.headline4,
                       textScaleFactor: scaleMultiplier,
                     ),
@@ -84,10 +91,15 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView(
                 children: [
                   for (int i = 0; i < 15; i++)
-                    ListTile(
-                      focusColor: Colors.blue,
-                      title: Text(
-                        i.toString(),
+                    GestureDetector(
+                      onTap: () => setState(() {
+                        numberInString = number[i];
+                      }),
+                      child: ListTile(
+                        focusColor: Colors.blue,
+                        title: Text(
+                          (i + 1).toString(),
+                        ),
                       ),
                     )
                 ],

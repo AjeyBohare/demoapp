@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   //dart_basic();
-  runApp(MaterialApp(home: CentreText()));
+  runApp(MyApp());
 }
 
 class CentreText extends StatelessWidget {
@@ -13,15 +13,36 @@ class CentreText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      // child: DefaultTextStyle(
-      //   style: TextStyle(),
-      child: Text(
-        "First App",
-        textDirection: TextDirection.ltr,
+    return MaterialApp(
+      home: Center(
+        child: DefaultTextStyle(
+          style: TextStyle(),
+          child: Text(
+            "First App",
+            //  textDirection: TextDirection.ltr,
+          ),
+        ),
       ),
-      //  ),
     );
+  }
+}
+
+class WithoutScaffoldContainer extends StatelessWidget {
+  const WithoutScaffoldContainer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.blueAccent,
+        child: const Center(
+          child: Text("First Widget after Material App",
+              style: TextStyle(decoration: TextDecoration.none),
+              //without this widget it gives error "RichText widgets require a Directionality widget ancestor."
+
+              textDirection: TextDirection.ltr),
+        ));
   }
 }
 
