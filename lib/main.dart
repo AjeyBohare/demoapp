@@ -1,9 +1,9 @@
-import 'package:demoapp/MyApp.dart';
+import 'package:demoapp/IPLinfoApp.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   //dart_basic();
-  runApp(MyApp());
+  runApp(IPLInfoApp());
 }
 
 class CentreText extends StatelessWidget {
