@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
+import 'TeamInfoScreen.dart';
 
 class IPLInfoApp extends StatelessWidget {
   const IPLInfoApp({Key? key}) : super(key: key);
@@ -11,9 +14,10 @@ class IPLInfoApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:
-          //WithoutScaffoldContainer()
-          const MyHomePage(title: 'IPL info App'),
+      home: const MyHomePage(title: 'IPL info App'),
+      routes: {
+        TeamInfoScreen.routeName: (context) => TeamInfoScreen(),
+      },
     );
   }
 }
@@ -41,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "SRH": "SRH-team-logo.png"
   };
   String? logoFile;
+  int i = 0;
 
   @override
   void initState() {
@@ -50,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    i = 0;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -65,32 +71,91 @@ class _MyHomePageState extends State<MyHomePage> {
                 shadowColor: Colors.blueAccent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
-                child: Center(child: Image.asset("assets/logo/${logoFile}")),
+                child: Container(
+                    padding: EdgeInsets.all(0),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/logo/${logoFile}"),
+                          fit: BoxFit.cover),
+                    )),
               ),
             ),
             SizedBox(
               height: 5,
             ),
             Expanded(
-              child: ListView(
-                children: IPLTeamLogo.entries
-                    .map((entry) => GestureDetector(
-                          onTap: () => setState(() {
-                            logoFile = entry.value;
-                          }),
-                          child: ListTile(
-                            focusColor: Colors.blue,
-                            title: Text(
-                              entry.key,
-                            ),
+              child: ListView.separated(
+                itemCount: IPLTeamLogo.length,
+                itemBuilder: (_, index) {
+                  var key = IPLTeamLogo.keys.elementAt(i);
+                  return GestureDetector(
+                    onTap: () => setState(() {
+                      logoFile = IPLTeamLogo[key];
+                    }),
+                    child: Slidable(
+                      endActionPane: ActionPane(
+                        motion: ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            // An action can be bigger than the others.
+                            flex: 1,
+                            onPressed: (_) {
+                              Navigator.of(context).pushNamed(
+                                  TeamInfoScreen.routeName,
+                                  arguments: (index + 1));
+                            },
+                            backgroundColor: Color(0xFF7BC043),
+                            foregroundColor: Colors.white,
+                            icon: Icons.info_outline_rounded,
+                            label: 'Team Info',
                           ),
-                        ))
-                    .toList(),
+                        ],
+                      ),
+                      child: ListTile(
+                        leading: Text("${++i}"),
+                        focusColor: Colors.blue,
+                        title: Text(
+                          key,
+                        ),
+                        trailing: FavoriteButton(
+                          isFavorite: false,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (_, index) => Divider(
+                  height: 8,
+                  thickness: 2.0,
+                ),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  FavoriteButton({Key? key, required this.isFavorite}) : super(key: key);
+  bool isFavorite;
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => setState(() {
+        widget.isFavorite = !widget.isFavorite;
+      }),
+      child: Icon(
+          widget.isFavorite
+              ? Icons.favorite_rounded
+              : Icons.favorite_border_rounded,
+          color: Colors.red[300]),
     );
   }
 }
